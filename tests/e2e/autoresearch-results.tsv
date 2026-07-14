@@ -1,0 +1,20 @@
+iteration	timestamp	test_name	verify_passed	passing_count	decision	note
+0	2026-04-24T01:32:00Z	baseline	true	1	baseline	scaffold with ok:true happy path
+1	2026-04-24T01:33:24Z	returns 200 + ok:true	true	1	keep	baseline retained in new suite
+2	2026-04-24T01:33:24Z	rejects no Authorization header (401)	true	2	keep	fail-closed auth, no bearer
+3	2026-04-24T01:33:24Z	rejects wrong bearer token (401)	true	3	keep	fail-closed auth, wrong secret
+4	2026-04-24T01:33:24Z	increments cycle counter	true	4	keep	monotonic counter (requires 2nd live call)
+5	2026-04-24T01:33:24Z	heating ⊆ known rooms	true	5	keep	heating set never names unknown rooms
+6	2026-04-24T01:33:24Z	first log line matches Cycle header	true	6	keep	status msg shape: Cycle #N | Outdoor | Sensors N/7
+7	2026-04-24T01:33:24Z	camera room is DISABLED	true	7	keep	DISABLED_ROOMS guard reflected in log
+8	2026-04-24T01:33:24Z	therm: line present + parsable	true	8	keep	manageThermostat always emits a therm: line
+9	2026-04-24T01:33:24Z	elapsed < maxDuration	true	9	keep	stays under Vercel 55s route budget
+10	2026-04-24T01:33:24Z	Sensors header N in [0,7]	true	10	keep	sensor count bounded by 7-room catalog
+11	2026-04-24T01:33:24Z	response shape + types	true	11	keep	every JSON key has the expected type
+
+# Summary
+# Baseline: 1 passing
+# Final: 11 passing (target 10 — reached at iter 10, iter 11 added as a bonus shape test)
+# Direction: higher is better
+# All 11 keep (0 discards, 0 crashes)
+# Verify duration: ~5.7s end-to-end (2 live cycle calls + 2 auth-failure calls = 4 HTTP hits)

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.thermoleo.agent</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>/Users/fabioclaw/Documents/Projects/thermoleo/agent/monitor.js</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardErrorPath</key>
+  <string>/tmp/thermoleo-agent.err.log</string>
+  <key>StandardOutPath</key>
+  <string>/tmp/thermoleo-agent.out.log</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>NEXT_PUBLIC_SUPABASE_URL</key>
+    <string>https://kraumomwmyaokjmbtash.supabase.co</string>
+    <key>NEXT_PUBLIC_SUPABASE_ANON_KEY</key>
+    <string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtyYXVtb213bXlhb2tqbWJ0YXNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NjQzOTYsImV4cCI6MjA5MDE0MDM5Nn0.KZwmJj7hWAU8Reh1LQlbfunpT4eqIm54x4uP3Srabxw</string>
+    <key>SABIANA_EMAIL</key>
+    <string>fabioparisi@me.com</string>
+    <key>SABIANA_PASSWORD</key>
+    <string>8hE@Lyh?!BHAjKog</string>
+    <key>IMESSAGE_PROXY_URL</key>
+    <string>http://localhost:9100</string>
+    <key>IMESSAGE_RECIPIENT</key>
+    <string>fabioparisi@me.com</string>
+  </dict>
+</dict>
+</plist>
