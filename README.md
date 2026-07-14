@@ -89,14 +89,32 @@ Each invocation of `/api/agent/cycle`:
 
 ## Hardware and integrations
 
-| Integration | Controls | Notes |
-|---|---|---|
-| Sabiana Cloud | Hydronic fancoils | Mode, setpoint, fan speed |
-| Legrand / Bticino Smarther | Apartment-level zone valve | Gates the boiler call for the whole hydronic loop |
-| Netatmo | Radiator valves | Antifreeze fallback in cooling season |
-| Sonoff (via Homey) | Room temperature/humidity | Bridged through a hub flow, not read directly |
-| MELCloud | Reversible heat-pump splits | Full heat/cool/off, per room |
-| Shelly | Room temperature/humidity | Pushes over webhook |
+Devices the current setup runs, per property. Anything with a cloud API and the same read/decide/actuate shape can be added as a vendor client under `src/lib/`.
+
+| Integration | Property | Role | Devices in the reference deployment |
+|---|---|---|---|
+| Sabiana Cloud | A — hydronic apartment | Actuation | 5 hydronic fancoils (mode, setpoint, fan speed) |
+| Legrand / Bticino Smarther | A — hydronic apartment | Actuation | Zone-valve thermostat gating the boiler call for the whole loop |
+| Netatmo | A — hydronic apartment | Actuation | Radiator valves (antifreeze fallback in cooling season) |
+| Sonoff SNZB-02D (via Homey) | A — hydronic apartment | Sensing | Per-room temperature/humidity, bridged through a Homey flow |
+| Shelly | A — hydronic apartment | Sensing | Temperature/humidity, pushes over webhook |
+| MELCloud (Mitsubishi Electric) | B — heat-pump house | Actuation | 3 reversible splits, full heat/cool/off per room |
+
+## Supabase
+
+Supabase Postgres is the only stateful component — the entire agent memory between cron ticks lives in these tables:
+
+| Table | Holds |
+|---|---|
+| `properties` | One row per home (timezone, coordinates for weather) |
+| `rooms` | Per-room config: targets, hard safety bounds, fan profile, `actuation_enabled`, criticality |
+| `sonoff_bridge` | Latest bridged sensor readings, with freshness cutoffs enforced by the agent |
+| `readings` | Historical time series for the dashboard |
+| `tokens` | Key-value state per provider and property: agent state, OAuth tokens, overrides, season |
+| `agent_actions` | Audit log of every command the agent sent |
+| `alerts` | Alert history with cooldowns |
+
+Migrations in `supabase/migrations/` are numbered and build on each other (001 base schema → 004 multi-property → 006/007 second-property seed and activation). Apply them in order with `supabase db push` or by running the SQL files sequentially. Scheduling can come from Vercel Cron (as deployed here) or from Supabase `pg_cron` calling the cycle endpoint — the handler doesn't care who ticks it.
 
 ## Safety design
 
@@ -110,8 +128,18 @@ Each invocation of `/api/agent/cycle`:
 
 This is a reference implementation of a live deployment, not a turnkey product. The room and property seeds in `supabase/migrations/` describe one family's homes. Forking this to control your own house means replacing those seeds with your own rooms, vendors, and safety bounds — not just changing environment variables.
 
+### One-command setup with Claude Code
+
 ```bash
-git clone <your-fork-url>
+git clone https://github.com/fabioparisi/thermoleo && cd thermoleo && npm install && claude "Read README.md, docs/ and supabase/migrations/, then interview me about my home (rooms, heating/cooling hardware, sensors, Supabase project) and adapt the seeds, vendor clients and safety bounds to my setup."
+```
+
+Claude Code walks the codebase and does the adaptation work interactively — the parts below are the same steps done by hand.
+
+### Manual setup
+
+```bash
+git clone https://github.com/fabioparisi/thermoleo
 cd thermoleo
 npm install
 cp .env.example .env.local   # fill in your own vendor credentials and secrets
@@ -158,6 +186,19 @@ npx tsc --noEmit      # Type check
 npm run test:e2e       # Vitest end-to-end cycle invariants
 npx vitest run tests/unit
 ```
+
+## Acknowledgments
+
+ThermoLeo stands on these projects:
+
+- [Next.js](https://github.com/vercel/next.js) + [Vercel Cron](https://vercel.com/docs/cron-jobs) — the stateless runtime and its heartbeat
+- [Supabase](https://github.com/supabase/supabase) / [supabase-js](https://github.com/supabase/supabase-js) — all persistent state
+- [shadcn/ui](https://github.com/shadcn-ui/ui), [Base UI](https://github.com/mui/base-ui), [Recharts](https://github.com/recharts/recharts), [lucide](https://github.com/lucide-icons/lucide), [sonner](https://github.com/emilkowalski/sonner), [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) — the dashboard
+- [Homey](https://homey.app) local API — the Sonoff sensor bridge
+- Vendor cloud APIs: Sabiana, Mitsubishi Electric MELCloud, Netatmo, Legrand/Bticino Works with Netatmo
+- [Vitest](https://github.com/vitest-dev/vitest) — tests
+
+No third-party code is vendored into this repo; everything above is consumed as a dependency or an API.
 
 ## License
 
