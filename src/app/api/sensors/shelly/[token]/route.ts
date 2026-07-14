@@ -14,7 +14,7 @@
  *     id, so Milano's bare-id rows can't collide and Milano stays byte-identical.
  *
  * Example webhook URL configured on each Shelly:
- *   https://thermoleo-app.vercel.app/api/sensors/shelly/<token>?room=campomarino_studio&temp=${ev.tC}&hum=${status["humidity:0"].rh}
+ *   https://your-deployment.vercel.app/api/sensors/shelly/<token>?room=campomarino_studio&temp=${ev.tC}&hum=${status["humidity:0"].rh}
  *
  * Security: temp/hum plausibility-gated; room must be a known campomarino room.
  * A leaked token's worst case is a spoofed reading, mitigated by the room

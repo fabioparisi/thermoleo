@@ -12,7 +12,7 @@
  *   LEGRAND_REDIRECT_URI       — must match exactly the one registered on the app
  *
  * Reference integration (HA): github.com/andrea-mattioli/bticino_x8000_component
- * Reply URL registered for this app: https://thermoleo-app.vercel.app/api/legrand/callback
+ * Reply URL registered for this app: https://your-deployment.vercel.app/api/legrand/callback
  */
 
 const AUTH_BASE = 'https://partners-login.eliotbylegrand.com';

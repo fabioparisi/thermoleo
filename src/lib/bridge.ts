@@ -3,7 +3,7 @@
  *
  * Pipeline (cloud-only, NO Mac dependency):
  *
- *   Sonoff SNZB-02D (Zigbee) → Homey Pro hub (192.168.1.69, runs the
+ *   Sonoff SNZB-02D (Zigbee) → Homey Pro hub (192.168.1.x, runs the
  *   `thermoleo-bridge` SDK 3 app that polls every 2 min) → HTTPS POST to
  *   `/api/sensors/ingest` on Vercel → upserts `sonoff_bridge` table on
  *   Supabase → this module reads it during the agent cycle.

@@ -9,7 +9,7 @@ state lives in Supabase).
 ## Prerequisites
 
 - `AGENT_CRON_SECRET` must be in `.env.local` (same secret set on Vercel).
-- Prod deployment must be reachable at `https://thermoleo-app.vercel.app`.
+- Prod deployment must be reachable at `https://your-deployment.vercel.app`.
 
 ## Run
 

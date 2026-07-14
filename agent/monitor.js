@@ -191,7 +191,7 @@ const SAFETY_BOUNDS = {
 };
 
 // --- Homey / Sonoff SNZB-02D (accurate temperature source) ---
-const HOMEY_IP = process.env.HOMEY_LOCAL_IP || '192.168.1.69';
+const HOMEY_IP = process.env.HOMEY_LOCAL_IP || '192.168.1.x';
 const HOMEY_ID = '657d935f54a03dc2052f49d5';
 const HOMEY_CLIENT_ID = '598d85a330e1bb0c0d75b8eb';
 

@@ -20,7 +20,7 @@ export interface AuthResult {
 }
 
 const ALLOWED_ORIGINS = new Set<string>([
-  'https://thermoleo-app.vercel.app',
+  'https://your-deployment.vercel.app',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
 ]);

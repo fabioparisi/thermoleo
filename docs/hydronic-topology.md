@@ -17,7 +17,7 @@
                           │  INGRESSO APPARTAMENTO (7° p)    │
                           │  + contatore termico             │
                           │  + Smarther 2 BNS zone valve     │  ← ON/OFF unica
-                          │  (00:03:50:dd:5f:e0)             │
+                          │  (xx:xx:xx:xx:xx:e0)             │
                           └────────┬───────────────┬─────────┘
                                    │               │
                           ┌────────▼───────────────▼─────────┐
@@ -46,8 +46,8 @@ I 5 fancoil hanno valvola 3-vie **interna** controllata da Sabiana Cloud, in par
 | Smarther 2 BNS zone valve | Ingresso appartamento | Netatmo cloud + relè HEATING/COOLING | Singola valvola ON/OFF apartment-level, no per-zone modulation |
 | Collettore di distribuzione | Probabile, in cassetta tecnica | Passivo | Da verificare fisicamente — cabinet del distributore non documentato |
 | Fancoil Sabiana CB-Touch x5 | Una per stanza | Sabiana Cloud (3-way valve + ECM motor) | leone/soggiorno/camera/studio/cucina |
-| NRV bagno1 (Vasca) | Sul radiatore | Netatmo (forzato 7°C antifreeze in cool) | MAC 09:00:00:22:d1:e0 |
-| NRV bagno2 (Doccia) | Sul radiatore | Netatmo (forzato 7°C antifreeze in cool) | MAC 09:00:00:22:d0:fa |
+| NRV bagno1 (Vasca) | Sul radiatore | Netatmo (forzato 7°C antifreeze in cool) | MAC xx:xx:xx:xx:xx:e0 |
+| NRV bagno2 (Doccia) | Sul radiatore | Netatmo (forzato 7°C antifreeze in cool) | MAC xx:xx:xx:xx:xx:fa |
 
 ## Valvole reali (escluso tapparelle)
 
@@ -71,7 +71,7 @@ I 5 fancoil hanno valvola 3-vie **interna** controllata da Sabiana Cloud, in par
 
 ## Le 10 NLLV — confermate tapparelle/tende
 
-`netatmo-valves-map.md` ha già fatto il cross-check completo: tutti i 10 NLLV mappano a tapparelle elettriche e tende motorizzate per stanza (4 in salone, 2 studio Fabio, 1 ciascuna cucina/camera/studio Lida/bagno Vasca). Zero NLLV sul circuito idronico. Conferma empirica suggerita: POST `target_position: 50` su MAC `00:04:74:00:01:48:68:98` (Tapparelle Salone Sinistra) → osservare tapparella muoversi fisicamente.
+`netatmo-valves-map.md` ha già fatto il cross-check completo: tutti i 10 NLLV mappano a tapparelle elettriche e tende motorizzate per stanza (4 in salone, 2 studio Fabio, 1 ciascuna cucina/camera/studio Lida/bagno Vasca). Zero NLLV sul circuito idronico. Conferma empirica suggerita: POST `target_position: 50` su MAC `xx:xx:xx:xx:xx:48:68:98` (Tapparelle Salone Sinistra) → osservare tapparella muoversi fisicamente.
 
 ## Action concrete (in priorità)
 

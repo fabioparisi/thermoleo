@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, it, expect, beforeAll } from 'vitest';
 
-const PROD_URL = 'https://thermoleo-app.vercel.app';
+const PROD_URL = 'https://your-deployment.vercel.app';
 const CYCLE_PATH = '/api/agent/cycle';
 const KNOWN_ROOMS = new Set([
   'leone', 'soggiorno', 'camera', 'studio', 'cucina', 'bagno1', 'bagno2',

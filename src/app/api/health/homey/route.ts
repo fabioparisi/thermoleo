@@ -64,7 +64,7 @@ async function sendAlert(reason: string) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         recipient: IMESSAGE_RECIPIENT,
-        message: `ThermoLeo [CRITICAL]: Homey API down (${reason}). Sensors leone/studio fallback degraded. Visita https://thermoleo-app.vercel.app/api/auth/homey/start per ri-autorizzare.`,
+        message: `ThermoLeo [CRITICAL]: Homey API down (${reason}). Sensors leone/studio fallback degraded. Visita https://your-deployment.vercel.app/api/auth/homey/start per ri-autorizzare.`,
       }),
       signal: AbortSignal.timeout(5000),
     });

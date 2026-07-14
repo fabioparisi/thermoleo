@@ -6,7 +6,7 @@
 
 The 10 `NLLV` modules with `current_position` 0-100% are **Netatmo Legrand "Living Light/Shutter" actuators** for **tapparelle (electric roller shutters) and tende (motorized curtains)**. They have NOTHING to do with the hydronic loop. `current_position` is the shutter open/close percentage.
 
-The two devices that actually move water in this apartment are the two `NRV` (Netatmo Radiator Valve) modules sitting on the BNS (Smarther 2) bridge — one per bathroom radiator. There is **no Netatmo valve on the fancoil hydronic loop**. The chiller cold water reaches the fancoils through the building riser, the apartment manifold, and the on/off zone valve commanded by the **Smarther 2 (BNS, MAC `00:03:50:dd:5f:e0`)**.
+The two devices that actually move water in this apartment are the two `NRV` (Netatmo Radiator Valve) modules sitting on the BNS (Smarther 2) bridge — one per bathroom radiator. There is **no Netatmo valve on the fancoil hydronic loop**. The chiller cold water reaches the fancoils through the building riser, the apartment manifold, and the on/off zone valve commanded by the **Smarther 2 (BNS, MAC `xx:xx:xx:xx:xx:e0`)**.
 
 **Implication for the current cooling problem**: nothing in the NLLV list is making your fancoils warm. The fancoils are blowing tepid air because the cold water source upstream is not actually cold. Investigate the chiller / zone-valve / Smarther 2 BNS, not the NLLV shutters.
 
@@ -18,16 +18,16 @@ Home: `Casa 7 Piano`, id `5dc07477777bfc8c6422ae15`. 14 rooms, ~35 modules.
 
 | MAC (last bytes) | Full MAC | NLLV friendly name | Netatmo room id | Room name | Live position |
 |---|---|---|---|---|---|
-| `98:80` | `00:04:74:00:01:48:98:80` | Tapparella Cucina | `3258171081` | Cucina | 43% |
-| `97:f5` | `00:04:74:00:01:48:97:f5` | Tende Salone Sinistra | `3528549383` | Salone | 50% |
-| `68:27` | `00:04:74:00:01:48:68:27` | Tapparelle Bagno Vasca | `815666668` | Bagno Vasca (bagno1) | 100% |
-| `68:98` | `00:04:74:00:01:48:68:98` | Tapparelle Salone Sinistra | `3528549383` | Salone | **0%** (chiusa) |
-| `68:b4` | `00:04:74:00:01:48:68:b4` | Tapparelle Camera da Letto | `3304643527` | Camera da letto | 23% |
-| `98:e4` | `00:04:74:00:01:48:98:e4` | Tapparelle Studio Lida | `57604598` | Studio Lida | 55% |
-| `97:82` | `00:04:74:00:01:48:97:82` | Tapparelle Salone Destra | `3528549383` | Salone | 100% |
-| `68:ca` | `00:04:74:00:01:48:68:ca` | Tapparelle Studio Fabio Sinistra | `2138131162` | Studio Fabio | 52% |
-| `98:0e` | `00:04:74:00:01:48:98:0e` | Tapparelle Studio Fabio Destra | `2138131162` | Studio Fabio | 100% |
-| `68:30` | `00:04:74:00:01:48:68:30` | Tende Salone Destra | `3528549383` | Salone | **0%** (chiusa) |
+| `98:80` | `xx:xx:xx:xx:xx:48:98:80` | Tapparella Cucina | `3258171081` | Cucina | 43% |
+| `97:f5` | `xx:xx:xx:xx:xx:48:97:f5` | Tende Salone Sinistra | `3528549383` | Salone | 50% |
+| `68:27` | `xx:xx:xx:xx:xx:48:68:27` | Tapparelle Bagno Vasca | `815666668` | Bagno Vasca (bagno1) | 100% |
+| `68:98` | `xx:xx:xx:xx:xx:48:68:98` | Tapparelle Salone Sinistra | `3528549383` | Salone | **0%** (chiusa) |
+| `68:b4` | `xx:xx:xx:xx:xx:48:68:b4` | Tapparelle Camera da Letto | `3304643527` | Camera da letto | 23% |
+| `98:e4` | `xx:xx:xx:xx:xx:48:98:e4` | Tapparelle Studio Lida | `57604598` | Studio Lida | 55% |
+| `97:82` | `xx:xx:xx:xx:xx:48:97:82` | Tapparelle Salone Destra | `3528549383` | Salone | 100% |
+| `68:ca` | `xx:xx:xx:xx:xx:48:68:ca` | Tapparelle Studio Fabio Sinistra | `2138131162` | Studio Fabio | 52% |
+| `98:0e` | `xx:xx:xx:xx:xx:48:98:0e` | Tapparelle Studio Fabio Destra | `2138131162` | Studio Fabio | 100% |
+| `68:30` | `xx:xx:xx:xx:xx:48:68:30` | Tende Salone Destra | `3528549383` | Salone | **0%** (chiusa) |
 
 The two NLLV at 0% are **Tende Salone Sinistra and Tende Salone Destra (le tende motorizzate del salone, non le tapparelle)**. Domestic curtains. Closed because nobody pulled them open. They have zero impact on water temperature.
 
@@ -35,9 +35,9 @@ The two NLLV at 0% are **Tende Salone Sinistra and Tende Salone Destra (le tende
 
 | Device | MAC | Type | Room | Role |
 |---|---|---|---|---|
-| Termostato (Smarther 2) | `00:03:50:dd:5f:e0` | BNS | `2171004425` Termostato (livingroom) | Commands the apartment-level zone valve that gates ALL chilled/hot water entering the manifold. Forced to manual 30°C/180d in summer by `ensureSmartherSummerOpen` so the valve stays open. Live: `boiler_status=true`, `cooler_status=false` — **see open question #1**. |
-| Radiatore Bagno Vasca | `09:00:00:22:d1:e0` | NRV | `815666668` Bagno Vasca (bagno1) | Bathroom radiator valve. Forced manual 7°C/180d antifreeze in summer (so radiator stays closed and doesn't condense humidity). |
-| Radiatore Bagno Doccia | `09:00:00:22:d0:fa` | NRV | `2220668919` Bagno Doccia (bagno2) | Same. Forced 7°C/180d antifreeze. |
+| Termostato (Smarther 2) | `xx:xx:xx:xx:xx:e0` | BNS | `2171004425` Termostato (livingroom) | Commands the apartment-level zone valve that gates ALL chilled/hot water entering the manifold. Forced to manual 30°C/180d in summer by `ensureSmartherSummerOpen` so the valve stays open. Live: `boiler_status=true`, `cooler_status=false` — **see open question #1**. |
+| Radiatore Bagno Vasca | `xx:xx:xx:xx:xx:e0` | NRV | `815666668` Bagno Vasca (bagno1) | Bathroom radiator valve. Forced manual 7°C/180d antifreeze in summer (so radiator stays closed and doesn't condense humidity). |
+| Radiatore Bagno Doccia | `xx:xx:xx:xx:xx:fa` | NRV | `2220668919` Bagno Doccia (bagno2) | Same. Forced 7°C/180d antifreeze. |
 
 The 5 Sabiana fancoils (leone, soggiorno, camera, studio, cucina) do not have an NLLV or NRV on their water side — they have a built-in 3-way valve commanded over Sabiana Cloud, fed by whatever water the building riser delivers downstream of the Smarther's zone valve.
 
@@ -78,7 +78,7 @@ All three match what `ensureSmartherSummerOpen` and `bathroom-antifreeze` are su
 
 1. **Building-side check**: confirm with the amministratore that the condominial chiller is actively serving the riser today. If not, no amount of valve juggling will help. Sabiana's 22°C waterTemp is the smoking gun — that's roughly ambient.
 2. **Probe BNS for a cool-mode flag**: call `GET /api/homestatus` parsing the top-level `home` object for `therm_mode`, `mode`, `cooling_status` fields beyond what our types capture; also try `POST /api/setstate { home: { id, therm_mode: 'cool' } }` and observe whether `cooler_status` flips to true. The Smarther 2 has an explicit Heating/Cooling firmware setting accessible from the Home+Control app — verify it is set to Cooling for summer on the physical device or via the app.
-3. **NLLV is a red herring — close that line of investigation.** Confirm by trying `POST /api/setstate { home: { id, modules: [{ id: "00:04:74:00:01:48:68:98", target_position: 50 }] }}` — you'll see the salone left curtain physically slide open. That confirms NLLV = shutters and removes them from suspect list.
+3. **NLLV is a red herring — close that line of investigation.** Confirm by trying `POST /api/setstate { home: { id, modules: [{ id: "xx:xx:xx:xx:xx:48:68:98", target_position: 50 }] }}` — you'll see the salone left curtain physically slide open. That confirms NLLV = shutters and removes them from suspect list.
 4. **Smarther zone-valve manual override**: if `cooler_status` won't flip, try forcing the Smarther into `therm_setpoint_mode='max'` (boost) — should physically open the valve regardless of the cool/heat firmware setting. If water at the fancoil still doesn't get cold, the problem is upstream of the Smarther.
 5. **Check NRV bathroom valves haven't accidentally been put on the fancoil loop manifold** — visually inspect the manifold cabinet. We assume NRV are on the bathroom radiators only, but if the installer put one inline on the cold-water riser by mistake, a 7°C antifreeze setpoint in summer would explain everything (valve thinks "room is at 27°C, I'm satisfied at 7°C, close"). Very unlikely but cheap to verify.
 6. **Long-term**: extend `response-types.ts` to capture `cooler_status`, `boiler_status`, and any `therm_mode` / `cooling_*` fields on the home object. Then expose them in `/api/netatmo/status` so this kind of investigation is one curl away next time.
@@ -90,4 +90,4 @@ All three match what `ensureSmartherSummerOpen` and `bathroom-antifreeze` are su
 - `src/lib/agent/smarther-summer.ts` — `ensureSmartherSummerOpen` (the 30°C / 180-day pin).
 - `src/lib/agent/bathroom-antifreeze.ts` — bathroom NRV → 7°C / 180-day pin.
 - Supabase `tokens` row `provider='netatmo_room_map'`: `{bagno1: 815666668, bagno2: 2220668919, soggiorno: 2171004425}`.
-- Live status snapshot: https://thermoleo-app.vercel.app/api/netatmo/status.
+- Live status snapshot: https://your-deployment.vercel.app/api/netatmo/status.

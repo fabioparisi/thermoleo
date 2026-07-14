@@ -87,7 +87,7 @@ The cloud `access_token` **does NOT directly authorize** calls to a specific Hom
 
 URL pattern summary:
 - Cloud relay: `https://<cloudId>.connect.athom.com/api/manager/...`
-- LAN direct: `http://192.168.1.69/api/manager/...` (must still do the delegation → session dance, or pre-create a Personal Access Token in Homey settings — but PATs are user-issued, not OAuth-issued).
+- LAN direct: `http://192.168.1.x/api/manager/...` (must still do the delegation → session dance, or pre-create a Personal Access Token in Homey settings — but PATs are user-issued, not OAuth-issued).
 
 ## Persistence pattern raccomandato
 

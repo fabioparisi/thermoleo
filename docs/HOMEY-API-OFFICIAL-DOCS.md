@@ -2,7 +2,7 @@
 
 **Source:** https://api.developer.homey.app/ (GitBook), sitemap-pages.xml, and the dynamic `master.md?ask=...` query interface (the docs surface as a single LLM-queryable Markdown bundle).
 
-**Goal:** End-to-end documented flow from `Authorize` click to a working call against `http://192.168.1.69/api/manager/devices/device/`.
+**Goal:** End-to-end documented flow from `Authorize` click to a working call against `http://192.168.1.x/api/manager/devices/device/`.
 
 > CRITICAL FINDING — there is **no Personal Access Token (PAT) flow** in the official Homey Web API docs. The docs explicitly state: "There isn't a PAT flow in these docs. Homey Web API access uses OAuth2 plus a delegation token and a Homey session token." Any `pat-apps-...` token you may have seen is either (a) an internal-only Homey developer-tools artifact, or (b) something undocumented. The supported public flow is OAuth2 → delegation → session.
 
@@ -91,7 +91,7 @@ Authorization: Bearer <access_token>
 | `_id`             | string           | The Homey ID. **Note the underscore.** Not `id`.            |
 | `name`            | string           | User-set name (e.g. "Casa").                                 |
 | `platform`        | string enum      | `"local"` for Homey Pro, `"cloud"` for Homey Cloud.          |
-| `localUrl`        | string \| null   | HTTP LAN URL, e.g. `http://192.168.1.69`.                    |
+| `localUrl`        | string \| null   | HTTP LAN URL, e.g. `http://192.168.1.x`.                    |
 | `localUrlSecure`  | string \| null   | HTTPS LAN URL with Homey-issued cert.                        |
 | `remoteUrl`       | string \| null   | Athom-proxied public URL.                                    |
 
@@ -139,7 +139,7 @@ Content-Type: application/json
 
 **Verbatim:**
 ```
-GET http://192.168.1.69/api/manager/devices/device
+GET http://192.168.1.x/api/manager/devices/device
 Authorization: Bearer <session token>
 ```
 
