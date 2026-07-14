@@ -1,6 +1,6 @@
 # ThermoLeo
 
-A serverless, multi-property home heating and cooling agent — sensors in, safe decisions out, every cron tick, forever.
+A serverless, multi-property home heating and cooling agent: independent room sensors in, on/off hysteresis decisions out, every cron tick, forever.
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -11,7 +11,9 @@ A serverless, multi-property home heating and cooling agent — sensors in, safe
 
 ThermoLeo runs two real homes, 24/7, unattended: an apartment on hydronic fancoils and a seaside house on Mitsubishi splits. It has no daemon, no long-running process, and no memory beyond a Postgres row — a cron tick fires a stateless HTTP handler that reads every sensor, decides what each room needs, sends the commands, and writes the resulting state back to Supabase before the next tick starts from scratch.
 
-The design center is a nursery. One of the rooms this agent controls belongs to a newborn who cannot regulate his own body temperature or ask for help. Every decision path in the codebase is written with that room's safety bounds as a hard, season-independent clamp that no comfort logic, override, or bug can cross — the rest of the system (fan curves, hysteresis, per-property dispatch) is built around that non-negotiable core.
+The core idea is accurate measurement driving simple control. Fancoils, splits, and thermostats all have onboard sensors, but they sit inside or next to the heat/cold source, so they read the appliance, not the room. ThermoLeo ignores them: each room gets an independent external sensor placed away from the source, and the agent drives every source on/off around the room's target temperature with a hysteresis dead-band — turn on when the room drifts past the threshold on one side, off when it crosses back on the other. No PID, no modulation guesswork: honest readings, a target, a dead-band, and rate limits so hardware doesn't flap.
+
+On top of that sits a safety layer, designed around the hardest room in the house — a nursery. Its bounds are a hard, season-independent clamp that no comfort logic, override, or bug can cross; every other room has its own wider clamp.
 
 This repository is published as a reference implementation of a system actually running two homes, not as a general-purpose product. See [Getting started](#getting-started) before you fork it.
 
