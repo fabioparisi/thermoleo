@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/banner.png" alt="ThermoLeo — the set-and-forget home temperature agent" width="100%">
+</p>
+
 # ThermoLeo
 
 A serverless, multi-property home heating and cooling agent: independent room sensors in, on/off hysteresis decisions out, every cron tick, forever.
